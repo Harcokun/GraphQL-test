@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const mongoose = require('mongoose');
 
 exports.getUser = async (req, res, next) => {
     const user = await User.findById(req.params.id);
@@ -43,7 +44,7 @@ exports.updateUser = async (req, res, next) => {
             });
         }
 
-        user = await user.findByIdAndUpdate(req.params.id, req.body, {
+        user = await User.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
         });
@@ -66,21 +67,20 @@ exports.deleteUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
 
-        if(!user) {
+        if (!user) {
             return res.status(404).json({
                 success: false,
                 message: `No user with the id of ${req.params.id}`
             });
         }
 
-        await user.remove();
+        await User.deleteOne({ _id: req.params.id });
 
         res.status(200).json({
             success: true,
             data: {}
         });
-    }  
-    catch(error) {
+    } catch (error) {
         console.log(error);
         return res.status(500).json({
             success: false,
@@ -88,4 +88,3 @@ exports.deleteUser = async (req, res, next) => {
         });
     }
 }
-  
