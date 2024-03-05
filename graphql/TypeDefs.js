@@ -1,9 +1,12 @@
 const typeDefs = `
+  scalar Date
+
   type User {
     id: ID!
     name: String!
     email: String!
-    password: String!
+    role: String!
+    createAt: Date!
   }
 
   type Query {
@@ -12,8 +15,8 @@ const typeDefs = `
   }
 
   type Mutation {
-    createUser(name: String!, email: String!, password: String!): User
-    updateUser(id: ID!, name: String, email: String, password: String): User
+    createUser(name: String!, email: String!, role: String, password: String!): User
+    updateUser(id: ID!, name: String, email: String, role: String, password: String): User
     deleteUser(id: ID!): User
   }
 `;

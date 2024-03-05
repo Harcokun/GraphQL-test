@@ -10,6 +10,7 @@ connectDB();
 
 //Routes files
 const auth = require('./routes/auth');
+const user = require('./routes/user');
 
 const app = express();
 
@@ -17,6 +18,7 @@ const app = express();
 app.use(express.json());
 
 //Mount routers
+app.use('/api/v1/user', user);
 app.use('/api/v1/auth', auth);
 
 const PORT = process.env.PORT || 3000;

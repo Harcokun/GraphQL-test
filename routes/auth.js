@@ -1,29 +1,13 @@
 const express = require('express');
-const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/auth');
-var { createHandler } = require("graphql-http/lib/use/express")
-const typeDefs = require("../graphql/TypeDefs");
-const resolvers = require("../graphql/Resolvers");
-const { makeExecutableSchema } = require('@graphql-tools/schema');
+const {register, login, getMe, logout} = require('../controllers/auth');
 
-const router = express.Router({mergeParams: true});
+const router = express.Router();
 
-// const {protect} = require('../middleware/auth');
+const {protect} = require('../middleware/auth');
 
-const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-// GraphQL endpoint
-router.use(
-    "/graphql",
-    createHandler({
-      schema,
-      rootValue: resolvers,
-      graphiql: true,
-    })
-  );
-
-// Example non-GraphQL route
-router.post('/register', createUser);
-router.get('/', getUsers);
-router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
+router.post('/register', register);
+router.post('/login', login);
+router.get('/me', protect, getMe);
+router.get('/logout', logout);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/auth');
+const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/user');
 
 const resolvers = {
   Query: {
@@ -22,9 +22,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    createUser: async (_, { name, email, password }) => {
+    createUser: async (_, { name, email, role, password }) => {
       try {
-        const user = await User.create({ name, email, password });
+        const user = await User.create({ name, email, role, password });
         return user;
       } catch (error) {
         throw new Error(`Failed to create user: ${error}`);
