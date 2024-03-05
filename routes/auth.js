@@ -1,17 +1,20 @@
 const express = require('express');
 const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/auth');
-const { graphqlHTTP } = require("express-graphql");
-const schema = require("../graphql/Schema");
+var { createHandler } = require("graphql-http/lib/use/express")
+const typeDefs = require("../graphql/TypeDefs");
 const resolvers = require("../graphql/Resolvers");
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 
 const router = express.Router({mergeParams: true});
 
 // const {protect} = require('../middleware/auth');
 
+const schema = makeExecutableSchema({ typeDefs, resolvers })
+
 // GraphQL endpoint
 router.use(
     "/graphql",
-    graphqlHTTP({
+    createHandler({
       schema,
       rootValue: resolvers,
       graphiql: true,

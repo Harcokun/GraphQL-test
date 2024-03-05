@@ -1,8 +1,9 @@
 const User = require("../models/User");
+const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/auth');
 
 const resolvers = {
   Query: {
-    user: async (_, { id }) => {
+    getUser: async (_, { id }) => {
       try {
         const user = await User.findById(id);
         return user;
@@ -10,9 +11,10 @@ const resolvers = {
         throw new Error(`Failed to get user: ${error}`);
       }
     },
-    users: async () => {
+    getUsers: async () => {
       try {
         const users = await User.find();
+        console.log(users);
         return users;
       } catch (error) {
         throw new Error(`Failed to get users: ${error}`);
