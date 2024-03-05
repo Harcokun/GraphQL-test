@@ -1,13 +1,13 @@
 const express = require('express');
 const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/user');
 var { createHandler } = require("graphql-http/lib/use/express")
-const typeDefs = require("../graphql/TypeDefs");
-const resolvers = require("../graphql/Resolvers");
+const typeDefs = require("../graphql/User/TypeDefs");
+const resolvers = require("../graphql/User/Resolvers");
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
 const router = express.Router({mergeParams: true});
 
-const {protect} = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 
 // express graphql expects your resolvers to be part of your schema.
 const schema = makeExecutableSchema({ typeDefs, resolvers })
@@ -24,7 +24,11 @@ router.use(
 
 // Example non-GraphQL route
 router.post('/create', createUser);
-router.get('/', getUsers);
-router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
+router.route('/')
+  .get(protect, authorize('admin'), getUsers);
+router.route('/:id')
+  .get(getUser)
+  .put(protect, authorize('admin', 'user'),updateUser)
+  .delete(protect, authorize('admin', 'user'), deleteUser);
 
 module.exports = router;

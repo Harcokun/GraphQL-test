@@ -1,5 +1,4 @@
-const User = require("../models/User");
-const { getUser, getUsers, createUser, updateUser, deleteUser } = require('../controllers/user');
+const User = require("../../models/User");
 
 const resolvers = {
   Query: {
@@ -14,7 +13,6 @@ const resolvers = {
     getUsers: async () => {
       try {
         const users = await User.find();
-        console.log(users);
         return users;
       } catch (error) {
         throw new Error(`Failed to get users: ${error}`);
