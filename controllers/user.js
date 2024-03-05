@@ -58,7 +58,7 @@ exports.updateUser = async (req, res, next) => {
         if(user.id !== req.user.id && req.user.role !== 'admin') {
             return res.status(401).json({
                 success: false,
-                message: `User ${req.user.id} is not authorized to update this user`
+                message: `User ${req.user.name} is not authorized to update this user`
             });
         }
 

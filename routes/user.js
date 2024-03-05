@@ -25,7 +25,7 @@ router.use(
 // Example non-GraphQL route
 router.post('/create', createUser);
 router.route('/')
-  .get(protect, authorize('admin'), getUsers);
+  .get(protect, authorize('admin', 'user'), getUsers);
 router.route('/:id')
   .get(getUser)
   .put(protect, authorize('admin', 'user'),updateUser)
