@@ -10,6 +10,7 @@ connectDB();
 
 //Routes files
 const auth = require('./routes/auth');
+const book = require('./routes/book');
 const user = require('./routes/user');
 
 const app = express();
@@ -18,8 +19,9 @@ const app = express();
 app.use(express.json());
 
 //Mount routers
-app.use('/api/v1/user', user);
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/book', book);
+app.use('/api/v1/user', user);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, console.log('Server running in', process.env.NODE_ENV, 'mode on port', PORT));

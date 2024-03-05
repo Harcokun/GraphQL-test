@@ -58,7 +58,7 @@ exports.updateUser = async (req, res, next) => {
         if(user.id !== req.user.id && req.user.role !== 'admin') {
             return res.status(401).json({
                 success: false,
-                message: `User ${req.user.id} is not authorized to update this booking`
+                message: `User ${req.user.id} is not authorized to update this user`
             });
         }
 
@@ -96,7 +96,7 @@ exports.deleteUser = async (req, res, next) => {
         if(user.id !== req.user.id && req.user.role !== 'admin') {
             return res.status(401).json({
                 success: false,
-                message: `User ${req.user.id} is not authorized to delete this booking`
+                message: `User ${req.user.id} is not authorized to delete this user`
             });
         }
 

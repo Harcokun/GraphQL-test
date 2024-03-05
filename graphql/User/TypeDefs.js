@@ -6,7 +6,7 @@ const typeDefs = `
     name: String!
     email: String!
     role: String!
-    createAt: Date!
+    createAt: Date
   }
 
   type Query {
