@@ -61,9 +61,9 @@ const resolvers = {
         throw new Error(err.message);
       }
     },
-    logout: async (_, __, { res }) => {
+    logout: async (_, __, context) => {
       try {
-        res.cookie("token", "none", {
+        context.res.cookie("token", "none", {
           expires: new Date(Date.now() + 10 * 1000),
           httpOnly: true,
         });
@@ -80,10 +80,10 @@ const resolvers = {
   Query: {
     getMe: async (_, __, context) => {
       try {
-        console.log(context.user);
+        console.log(context.req.user);
         // const { userId } = context.request.user.id;
         // const user = await User.findById(userId);
-        return context.user;
+        return context.req.user;
       } catch (err) {
         throw new Error(err.message);
       }

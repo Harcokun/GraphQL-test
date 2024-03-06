@@ -20,7 +20,7 @@ router.use(
     return {
       schema,
       rootValue: resolvers,
-      context: { user: req.user },
+      context: { req: req, res: res },
       graphiql: true,
     };
   })
