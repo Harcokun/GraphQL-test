@@ -16,7 +16,6 @@ router.use(
   "/graphql",
   protect,
   graphqlHTTP((req, res) => {
-    console.log(`user in route: ${req.user}`);
     return {
       schema,
       rootValue: resolvers,

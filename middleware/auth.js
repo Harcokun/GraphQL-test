@@ -5,7 +5,10 @@ const User = require("../models/User");
 exports.protect = async (req, res, next) => {
   let token;
 
-  // console.log(`req in protect: \n${req}`);
+  if(req.body.operationName === "Register" || req.body.operationName === "Login") {
+    return next();
+  }
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -30,7 +33,6 @@ exports.protect = async (req, res, next) => {
     // console.log(decoded);
 
     req.user = await User.findById(decoded.id);
-    console.log(`user in protect: ${req.user}`);
 
     next();
   } catch (err) {
