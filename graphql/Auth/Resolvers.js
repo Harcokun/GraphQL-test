@@ -80,10 +80,10 @@ const resolvers = {
   Query: {
     getMe: async (_, __, context) => {
       try {
-        console.log(context);
-        const { userId } = context.request.user.id;
-        const user = await User.findById(userId);
-        return user;
+        console.log(context.user);
+        // const { userId } = context.request.user.id;
+        // const user = await User.findById(userId);
+        return context.user;
       } catch (err) {
         throw new Error(err.message);
       }
