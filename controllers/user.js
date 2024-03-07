@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { saveCache, getCacheFromParams, removeCache } = require("../util/cache");
+const { saveCache, getCacheFromParams, updateCache, removeCache } = require("../util/cache");
 
 exports.getUser = async (req, res, next) => {
   const data = await getCacheFromParams(req);
@@ -74,6 +74,8 @@ exports.updateUser = async (req, res, next) => {
       new: true,
       runValidators: true,
     });
+
+    updateCache(user.id, user);
 
     res.status(200).json({
       success: true,

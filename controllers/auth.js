@@ -67,9 +67,6 @@ exports.login = async (req, res, next) => {
         .json({ success: false, message: "Invalid credentials" });
     }
 
-    // Save in Redis
-    saveCache(user.id, user, res);
-
     //Create token
     //const token = user.getSignedJwtToken();
     //res.status(200).json({success: true, token});
