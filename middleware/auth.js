@@ -3,11 +3,13 @@ const User = require("../models/User");
 
 //Protect routes
 exports.protect = async (req, res, next) => {
-  let token;
+  const noAuthOperation = new Set(["Register", "Login"]);
 
-  if(req.body.operationName === "Register" || req.body.operationName === "Login") {
+  if (noAuthOperation.has(req.body.operationName)) {
     return next();
   }
+
+  let token;
 
   if (
     req.headers.authorization &&
@@ -18,12 +20,10 @@ exports.protect = async (req, res, next) => {
 
   //Make sure token exists
   if (!token || token == "null") {
-    return res
-      .status(401)
-      .json({
-        success: false,
-        message: "Not authorize to access this route: token failed",
-      });
+    return res.status(401).json({
+      success: false,
+      message: "Not authorize to access this route: token failed",
+    });
   }
 
   try {

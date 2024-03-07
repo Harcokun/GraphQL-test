@@ -5,7 +5,7 @@ const connectDB = require("./config/db");
 //Load env vars
 dotenv.config({path:'./config/config.env'});
 
-//Connect to database
+//Connect to database and cache
 connectDB();
 
 //Routes files
